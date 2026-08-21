@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Estudio 360 - Mis XV Años</title>
+    <title>Estudio 360 - Bodas & Eventos</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,7 +52,7 @@
         }
 
         /* ==========================================
-           HEADER LIMPIO IDÉNTICO
+           HEADER LIMPIO
         ========================================== */
         .header {
             position: fixed;
@@ -174,9 +174,9 @@
         }
 
         /* ==========================================
-           HERO DE XV AÑOS
+           HERO DE BODAS
         ========================================== */
-        .xv-hero {
+        .wedding-hero {
             position: relative;
             padding: 140px 20px 60px;
             text-align: center;
@@ -185,7 +185,7 @@
             border-bottom: 1px solid rgba(201, 164, 76, 0.2);
         }
 
-        .xv-hero h1 {
+        .wedding-hero h1 {
             font-family: 'Playfair Display', serif;
             font-size: clamp(2.4rem, 6vw, 4.2rem);
             font-weight: 900;
@@ -194,7 +194,7 @@
             margin-bottom: 10px;
         }
 
-        .xv-hero p {
+        .wedding-hero p {
             font-family: 'Playfair Display', serif;
             font-style: italic;
             color: var(--dorado-claro);
@@ -366,7 +366,7 @@
         }
 
         /* ==========================================
-           CARRITO SIDEBAR & OVERLAY
+           CARRITO LATERAL & OVERLAY
         ========================================== */
         .cart-overlay {
             position: fixed;
@@ -559,7 +559,7 @@
         }
 
         /* ==========================================
-           RESPONSIVE MOBILE
+           RESPONSIVE MOBILE (< 768px)
         ========================================== */
         @media (max-width: 768px) {
             .header {
@@ -599,16 +599,16 @@
 
     <header class="header">
         <div class="header__container">
-            <a href="Home.html" class="header__logo">
+            <a href="index.html" class="header__logo">
                 <img src="Imagenes/logo-360-transparente.png" alt="Logo 360" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
                 <span id="alt-logo" class="logo-fallback" style="display: none;">ESTUDIO <span>360</span></span>
             </a>
 
             <div class="header__actions-group">
                 <nav class="header__navegacion" id="navLinks">
-                    <a href="Home.html">Home</a>
-                    <a href="index.html">Paquetes Bodas</a>
-                    <a href="#paquetes" class="active-link">XV Años</a>
+                    <a href="index.html">Home</a>
+                    <a href="paquetes-boda.html" class="active-link">Paquetes Bodas</a>
+                    <a href="paquetes-xv.html">Paquetes XV Años</a>
                     <a href="#contacto">Contacto</a>
                 </nav>
 
@@ -624,16 +624,16 @@
         </div>
     </header>
 
-    <section class="xv-hero">
-        <h1>Mis XV Años</h1>
-        <p>"Haciendo eternos los instantes mágicos de tu juventud"</p>
+    <section class="wedding-hero">
+        <h1>Bodas & Eventos</h1>
+        <p>"Capturando la esencia de tu día inolvidable"</p>
     </section>
 
     <main class="main-content">
         <section id="paquetes" class="section-header">
-            <h2>Paquetes de Quinceañera</h2>
+            <h2>Paquetes y Cobertura</h2>
             <div class="line"></div>
-            <p>Elige tu paquete temático o suma los servicios adicionales que requieras</p>
+            <p>Selecciona los servicios que deseas incluir para tu cotización</p>
         </section>
 
         <div class="filter-container">
@@ -641,7 +641,7 @@
             <button class="filter-btn" onclick="filterCatalog('paquete')">Paquetes Completos</button>
             <button class="filter-btn" onclick="filterCatalog('fotografia')">Fotografía</button>
             <button class="filter-btn" onclick="filterCatalog('video')">Video & Dron</button>
-            <button class="filter-btn" onclick="filterCatalog('impresion')">Recuerdos impresos</button>
+            <button class="filter-btn" onclick="filterCatalog('impresion')">Impresiones & Álbums</button>
         </div>
 
         <div class="services-grid" id="catalogo"></div>
@@ -677,70 +677,72 @@
     </footer>
 
     <script>
-        const PHONE_NUMBER = "5211891526"; // Tu WhatsApp con lada
+        // --- NÚMERO DE CONTACTO ---
+        const PHONE_NUMBER = "5214611891526"; // Tu WhatsApp con lada
 
-        // --- SERVICIOS Y PAQUETES EXCLUSIVOS DE XV AÑOS ---
+        // --- SERVICIOS ---
         const servicesData = [
             {
                 id: 1,
-                name: "Paquete XV Ensueño",
+                name: "Paquete Boda Platino",
                 category: "paquete",
-                price: 15500,
-                desc: "Cobertura completa del evento, video cinemático, videoclip de semblanza, sesión casual de fotos y Photobook premium.",
+                price: 18500,
+                desc: "Cobertura total foto + video cinema, tomas con dron, sesión previa y Photobook de lujo.",
                 img: "Imagenes/portada-sesion.jpg"
             },
             {
                 id: 2,
-                name: "Paquete XV Esencial",
+                name: "Paquete Boda Oro",
                 category: "paquete",
-                price: 9800,
-                desc: "Fotografía ilimitada durante la misa y la fiesta de gala, con entrega en galería digital HD organizada.",
+                price: 12500,
+                desc: "Cobertura completa ceremonia y recepción, fotografía ilimitada y video resumen HD.",
                 img: "Imagenes/Sesion.jpg"
             },
             {
                 id: 3,
-                name: "Sesión Fotográfica Casual (Pre-XV)",
+                name: "Sesión Save The Date / Pre-Boda",
                 category: "fotografia",
-                price: 2500,
-                desc: "Sesión creativa de fotos con cambios de vestuario en locación exterior antes del evento.",
+                price: 2800,
+                desc: "2 horas de sesión en locación a elegir con entrega digital en alta resolución.",
                 img: "Imagenes/Save_Date.jpg"
             },
             {
                 id: 4,
-                name: "Semblanza en Video (Videoclip)",
-                category: "video",
-                price: 2000,
-                desc: "Edición dinámica con fotos de infancia y tomas de la sesión previa para proyectar en las pantallas de la fiesta.",
-                img: "Imagenes/Resumen.jpg"
+                name: "Getting Ready (Preparativos)",
+                category: "fotografia",
+                price: 2200,
+                desc: "Fotografía y video íntimo durante el maquillaje y vestimenta de los novios.",
+                img: "Imagenes/Gettin.jpg"
             },
             {
                 id: 5,
-                name: "Cobertura Aérea con Dron 4K",
+                name: "Tomas Aéreas con Dron 4K",
                 category: "video",
                 price: 2500,
-                desc: "Tomas de altura espectaculares de la llegada al salón, sesión en exteriores de la quinceañera.",
+                desc: "Tomas panorámicas del recinto, iglesia y tomas grupales con piloto certificado.",
                 img: "Imagenes/Tomas_Dron.webp"
             },
             {
                 id: 6,
-                name: "Álbum Impreso Conmemorativo",
+                name: "Photobook Editorial 30x30cm",
                 category: "impresion",
-                price: 3200,
-                desc: "Libro impreso laminado y personalizado con las mejores fotografías editadas de la celebración.",
+                price: 3500,
+                desc: "Álbum de pasta dura en piel sintética con papel fotográfico de alta durabilidad.",
                 img: "Imagenes/Photobook.JPG"
             },
             {
                 id: 7,
-                name: "Cuadro de Firmas 16x20\"",
+                name: "Ampliación Enmarcada 20x24\"",
                 category: "impresion",
-                price: 1500,
-                desc: "Ampliación texturizada montada en marcolis con espacio amplio para las firmas y dedicatorias de los invitados.",
+                price: 1800,
+                desc: "Fotografía principal texturizada con marco de madera de lujo para bienvenida.",
                 img: "Imagenes/Ampliacion.jpg"
             }
         ];
 
         let cart = new Map();
 
+        // --- TOAST NOTIFIER ---
         const notify = (message) => {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -748,6 +750,7 @@
             setTimeout(() => toast.classList.remove('toast--visible'), 2500);
         };
 
+        // --- RENDERIZAR SERVICIOS ---
         function renderServices(items) {
             const container = document.getElementById('catalogo');
             if (!container) return;
@@ -755,7 +758,7 @@
             container.innerHTML = items.map(item => `
                 <article class="product-card">
                     <div class="product-img-wrapper">
-                        <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1549417229-aa67d3263c09?auto=format&fit=crop&w=600&q=80';">
+                        <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80';">
                     </div>
                     <div class="product-info">
                         <div>
@@ -773,6 +776,7 @@
             `).join('');
         }
 
+        // --- FILTROS ---
         function filterCatalog(cat) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -785,6 +789,7 @@
             }
         }
 
+        // --- APERTURA Y CIERRE DEL CARRITO ---
         const cartModal = document.getElementById('cartModal');
         const cartOverlay = document.getElementById('cartOverlay');
 
@@ -806,6 +811,7 @@
             }
         });
 
+        // --- LÓGICA DEL CARRITO ---
         function addToCart(id) {
             const item = servicesData.find(s => s.id === id);
             if (!item) return;
@@ -830,7 +836,8 @@
             const badge = document.getElementById('badgeCart');
             const totalEl = document.getElementById('cartTotalPrice');
 
-            let total = 0, count = 0;
+            let total = 0;
+            let count = 0;
 
             if (cart.size === 0) {
                 container.innerHTML = '<p style="color: var(--texto-gris); text-align: center; margin-top: 50px; font-size: 0.85rem;">El carrito está vacío</p>';
@@ -867,6 +874,7 @@
             totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
         }
 
+        // --- CHECKOUT WHATSAPP ---
         function checkoutWhatsApp() {
             if (cart.size === 0) {
                 notify("El carrito está vacío");
@@ -874,8 +882,8 @@
             }
 
             let total = 0;
-            let message = "👑 *COTIZACIÓN DE XV AÑOS - ESTUDIO 360* 👑\n\n";
-            message += "Hola, me gustaría validar disponibilidad para los siguientes servicios de Quinceañera:\n\n";
+            let message = "📸 *COTIZACIÓN DE BODA - ESTUDIO 360* 📸\n\n";
+            message += "Hola, me gustaría consultar disponibilidad para estos servicios:\n\n";
 
             cart.forEach(item => {
                 const subtotal = item.price * item.qty;
@@ -883,10 +891,11 @@
                 message += `• ${item.name} (${item.qty}x) — *$${subtotal.toLocaleString('es-MX')} MXN*\n`;
             });
 
-            message += `\n💰 *Total Estimado de Inversión:* $${total.toLocaleString('es-MX')} MXN\n\n`;
-            message += "¿Qué disponibilidad tienen en agenda?";
+            message += `\n💰 *Total Estimado:* $${total.toLocaleString('es-MX')} MXN\n\n`;
+            message += "¿Qué fechas tienen disponibles?";
 
-            window.open(`https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${encodeURIComponent(message)}`, '_blank');
+            const url = `https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
         }
 
         // --- MENÚ MÓVIL ---
@@ -903,6 +912,17 @@
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
             }
+        });
+
+        document.querySelectorAll('.header__navegacion a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = menuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
         });
 
         // --- INICIALIZACIÓN ---
