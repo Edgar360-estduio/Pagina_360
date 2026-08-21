@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Estudio 360 - Mis XV Años</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           VARIABLES & PALETA GLOBAL
+        ========================================== */
+        :root {
+            --azul-oscuro: #0a1626;
+            --azul: #10233f;
+            --azul-card: #162c4e;
+            --azul-hover: #1e3b63;
+            --dorado: #c9a44c;
+            --dorado-claro: #dfc477;
+            --blanco: #ffffff;
+            --texto-gris: #cbd5e1;
+            --max-width: 1200px;
+            --safe-bottom: max(20px, env(safe-area-inset-bottom));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--blanco);
+            background-color: var(--azul-oscuro);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ==========================================
+           HEADER LIMPIO IDÉNTICO
+        ========================================== */
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .header__container {
+            width: 100%;
+            max-width: var(--max-width);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+        }
+
+        .header__logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header__logo img {
+            max-height: 46px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .logo-fallback {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--blanco);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-fallback span {
+            color: var(--dorado-claro);
+        }
+
+        .header__actions-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header__navegacion {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            list-style: none;
+        }
+
+        .header__navegacion a {
+            color: var(--blanco);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .header__navegacion a:hover,
+        .header__navegacion a.active-link {
+            color: var(--dorado-claro);
+            transform: translateY(-2px);
+        }
+
+        .btn-cart-nav {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .btn-cart-nav:hover {
+            color: var(--dorado-claro);
+        }
+
+        .badge-cart {
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            background: var(--dorado);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .badge-cart.hidden {
+            display: none;
+        }
+
+        .menu-btn {
+            display: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        /* ==========================================
+           HERO DE XV AÑOS
+        ========================================== */
+        .xv-hero {
+            position: relative;
+            padding: 140px 20px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(10,22,38,0.85) 0%, rgba(10,22,38,0.98) 100%),
+                        url('Imagenes/portada-sesion.jpg') center/cover no-repeat;
+            border-bottom: 1px solid rgba(201, 164, 76, 0.2);
+        }
+
+        .xv-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            font-weight: 900;
+            color: var(--blanco);
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+
+        .xv-hero p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--dorado-claro);
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ==========================================
+           CATÁLOGO DE SERVICIOS
+        ========================================== */
+        .main-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--blanco);
+            margin-bottom: 8px;
+        }
+
+        .section-header .line {
+            width: 60px;
+            height: 3px;
+            background: var(--dorado);
+            margin: 0 auto 10px;
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            color: var(--texto-gris);
+            font-size: 0.95rem;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .filter-btn {
+            background: var(--azul-card);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--blanco);
+            padding: 9px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--dorado);
+            border-color: var(--dorado);
+            color: white;
+            box-shadow: 0 4px 15px rgba(201, 164, 76, 0.3);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background: var(--azul-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(201, 164, 76, 0.4);
+        }
+
+        .product-img-wrapper {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background: var(--azul);
+            overflow: hidden;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .product-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--blanco);
+            margin-bottom: 8px;
+        }
+
+        .product-desc {
+            font-size: 0.82rem;
+            color: var(--texto-gris);
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .product-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dorado-claro);
+        }
+
+        .btn-add {
+            background: var(--dorado);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background: var(--dorado-claro);
+        }
+
+        /* ==========================================
+           CARRITO SIDEBAR & OVERLAY
+        ========================================== */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 38, 0.6);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1999;
+        }
+
+        .cart-overlay--open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 380px;
+            max-width: 100vw;
+            height: 100%;
+            height: -webkit-fill-available;
+            background: var(--azul);
+            box-shadow: -5px 0 35px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            padding: 24px;
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            border-left: 1px solid rgba(201, 164, 76, 0.2);
+        }
+
+        .cart-modal--open {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-header h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--blanco);
+            font-size: 1.5rem;
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--texto-gris);
+            cursor: pointer;
+        }
+
+        .cart-items-list {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            margin: 15px 0;
+            padding-right: 5px;
+        }
+
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.85rem;
+        }
+
+        .cart-item-title {
+            color: var(--blanco);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .cart-item-sub {
+            color: var(--texto-gris);
+            font-size: 0.75rem;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--dorado-claro);
+            margin-right: 10px;
+        }
+
+        .cart-del-btn {
+            color: #ef4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 4px;
+        }
+
+        .cart-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 15px;
+        }
+
+        .cart-total-row span:first-child {
+            font-size: 0.8rem;
+            color: var(--texto-gris);
+            font-weight: 600;
+        }
+
+        .cart-total-row span:last-child {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dorado-claro);
+        }
+
+        .btn-whatsapp-checkout {
+            width: 100%;
+            padding: 14px;
+            background: #1ebe5d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-whatsapp-checkout:hover {
+            background: #179b4b;
+        }
+
+        /* --- TOAST --- */
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--dorado);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 3000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            pointer-events: none;
+        }
+
+        .toast--visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* ==========================================
+           FOOTER
+        ========================================== */
+        footer {
+            text-align: center;
+            padding: 25px 20px var(--safe-bottom);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            background: var(--azul);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================
+           RESPONSIVE MOBILE
+        ========================================== */
+        @media (max-width: 768px) {
+            .header {
+                top: 15px;
+                padding: 0 18px;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .header__navegacion {
+                position: fixed;
+                top: 75px;
+                left: 16px;
+                right: 16px;
+                background: rgba(16, 35, 63, 0.98);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-radius: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                flex-direction: column;
+                padding: 25px 20px;
+                gap: 18px;
+                display: none;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            }
+
+            .header__navegacion.active {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header__container">
+            <a href="Home.html" class="header__logo">
+                <img src="Imagenes/logo-360-transparente.png" alt="Logo 360" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
+                <span id="alt-logo" class="logo-fallback" style="display: none;">ESTUDIO <span>360</span></span>
+            </a>
+
+            <div class="header__actions-group">
+                <nav class="header__navegacion" id="navLinks">
+                    <a href="Home.html">Home</a>
+                    <a href="index.html">Servicios</a>
+                    <a href="#paquetes" class="active-link">XV Años</a>
+                    <a href="#contacto">Contacto</a>
+                </nav>
+
+                <button class="btn-cart-nav" onclick="openCart()" aria-label="Ver Carrito">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="badge-cart hidden" id="badgeCart">0</span>
+                </button>
+
+                <div class="menu-btn" id="menuBtn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="xv-hero">
+        <h1>Mis XV Años</h1>
+        <p>"Haciendo eternos los instantes mágicos de tu juventud"</p>
+    </section>
+
+    <main class="main-content">
+        <section id="paquetes" class="section-header">
+            <h2>Paquetes de Quinceañera</h2>
+            <div class="line"></div>
+            <p>Elige tu paquete temático o suma los servicios adicionales que requieras</p>
+        </section>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterCatalog('todos')">Todos</button>
+            <button class="filter-btn" onclick="filterCatalog('paquete')">Paquetes Completos</button>
+            <button class="filter-btn" onclick="filterCatalog('fotografia')">Fotografía</button>
+            <button class="filter-btn" onclick="filterCatalog('video')">Video & Dron</button>
+            <button class="filter-btn" onclick="filterCatalog('impresion')">Recuerdos impresos</button>
+        </div>
+
+        <div class="services-grid" id="catalogo"></div>
+    </main>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+    <aside class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h2>Tu Pedido</h2>
+            <button class="cart-close-btn" onclick="closeCart()">&times;</button>
+        </div>
+
+        <div class="cart-items-list" id="cartItemsContainer">
+            <p style="color: var(--texto-gris); text-align: center; margin-top: 50px; font-size: 0.85rem;">El carrito está vacío</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>TOTAL ESTIMADO:</span>
+                <span id="cartTotalPrice">$0.00</span>
+            </div>
+            <button class="btn-whatsapp-checkout" onclick="checkoutWhatsApp()">
+                <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> Pedir Cotización por WhatsApp
+            </button>
+        </div>
+    </aside>
+
+    <div id="toast" class="toast">Notificación</div>
+
+    <footer id="contacto">
+        <p>&copy; 2026 Estudio 360. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const PHONE_NUMBER = "5211891526"; // Tu WhatsApp con lada
+
+        // --- SERVICIOS Y PAQUETES EXCLUSIVOS DE XV AÑOS ---
+        const servicesData = [
+            {
+                id: 1,
+                name: "Paquete XV Ensueño",
+                category: "paquete",
+                price: 15500,
+                desc: "Cobertura completa del evento, video cinemático, videoclip de semblanza, sesión casual de fotos y Photobook premium.",
+                img: "Imagenes/portada-sesion.jpg"
+            },
+            {
+                id: 2,
+                name: "Paquete XV Esencial",
+                category: "paquete",
+                price: 9800,
+                desc: "Fotografía ilimitada durante la misa y la fiesta de gala, con entrega en galería digital HD organizada.",
+                img: "Imagenes/Sesion.jpg"
+            },
+            {
+                id: 3,
+                name: "Sesión Fotográfica Casual (Pre-XV)",
+                category: "fotografia",
+                price: 2500,
+                desc: "Sesión creativa de fotos con cambios de vestuario en locación exterior antes del evento.",
+                img: "Imagenes/Save_Date.jpg"
+            },
+            {
+                id: 4,
+                name: "Semblanza en Video (Videoclip)",
+                category: "video",
+                price: 2000,
+                desc: "Edición dinámica con fotos de infancia y tomas de la sesión previa para proyectar en las pantallas de la fiesta.",
+                img: "Imagenes/Resumen.jpg"
+            },
+            {
+                id: 5,
+                name: "Cobertura Aérea con Dron 4K",
+                category: "video",
+                price: 2500,
+                desc: "Tomas de altura espectaculares de la llegada al salón, sesión en exteriores de la quinceañera.",
+                img: "Imagenes/Tomas_Dron.webp"
+            },
+            {
+                id: 6,
+                name: "Álbum Impreso Conmemorativo",
+                category: "impresion",
+                price: 3200,
+                desc: "Libro impreso laminado y personalizado con las mejores fotografías editadas de la celebración.",
+                img: "Imagenes/Photobook.JPG"
+            },
+            {
+                id: 7,
+                name: "Cuadro de Firmas 16x20\"",
+                category: "impresion",
+                price: 1500,
+                desc: "Ampliación texturizada montada en marcolis con espacio amplio para las firmas y dedicatorias de los invitados.",
+                img: "Imagenes/Ampliacion.jpg"
+            }
+        ];
+
+        let cart = new Map();
+
+        const notify = (message) => {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('toast--visible');
+            setTimeout(() => toast.classList.remove('toast--visible'), 2500);
+        };
+
+        function renderServices(items) {
+            const container = document.getElementById('catalogo');
+            if (!container) return;
+
+            container.innerHTML = items.map(item => `
+                <article class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1549417229-aa67d3263c09?auto=format&fit=crop&w=600&q=80';">
+                    </div>
+                    <div class="product-info">
+                        <div>
+                            <h3 class="product-title">${item.name}</h3>
+                            <p class="product-desc">${item.desc}</p>
+                        </div>
+                        <div class="product-bottom">
+                            <span class="product-price">$${item.price.toLocaleString('es-MX')}</span>
+                            <button class="btn-add" onclick="addToCart(${item.id})">
+                                <i class="fas fa-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function filterCatalog(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (cat === 'todos') {
+                renderServices(servicesData);
+            } else {
+                const filtered = servicesData.filter(s => s.category === cat);
+                renderServices(filtered);
+            }
+        }
+
+        const cartModal = document.getElementById('cartModal');
+        const cartOverlay = document.getElementById('cartOverlay');
+
+        function openCart() {
+            cartModal.classList.add('cart-modal--open');
+            cartOverlay.classList.add('cart-overlay--open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            cartModal.classList.remove('cart-modal--open');
+            cartOverlay.classList.remove('cart-overlay--open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && cartModal.classList.contains('cart-modal--open')) {
+                closeCart();
+            }
+        });
+
+        function addToCart(id) {
+            const item = servicesData.find(s => s.id === id);
+            if (!item) return;
+
+            if (cart.has(id)) {
+                cart.get(id).qty += 1;
+            } else {
+                cart.set(id, { ...item, qty: 1 });
+            }
+
+            updateCartUI();
+            notify(`"${item.name}" agregado`);
+        }
+
+        function removeFromCart(id) {
+            cart.delete(id);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const badge = document.getElementById('badgeCart');
+            const totalEl = document.getElementById('cartTotalPrice');
+
+            let total = 0, count = 0;
+
+            if (cart.size === 0) {
+                container.innerHTML = '<p style="color: var(--texto-gris); text-align: center; margin-top: 50px; font-size: 0.85rem;">El carrito está vacío</p>';
+                badge.classList.add('hidden');
+                totalEl.textContent = '$0.00';
+                return;
+            }
+
+            let html = '';
+            cart.forEach((item, id) => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+                count += item.qty;
+
+                html += `
+                    <div class="cart-item-row">
+                        <div>
+                            <span class="cart-item-title">${item.name}</span>
+                            <span class="cart-item-sub">${item.qty} x $${item.price.toLocaleString('es-MX')}</span>
+                        </div>
+                        <div style="display:flex; align-items:center;">
+                            <span class="cart-item-price">$${subtotal.toLocaleString('es-MX')}</span>
+                            <button class="cart-del-btn" onclick="removeFromCart(${id})" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            badge.textContent = count;
+            badge.classList.remove('hidden');
+            totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.size === 0) {
+                notify("El carrito está vacío");
+                return;
+            }
+
+            let total = 0;
+            let message = "👑 *COTIZACIÓN DE XV AÑOS - ESTUDIO 360* 👑\n\n";
+            message += "Hola, me gustaría validar disponibilidad para los siguientes servicios de Quinceañera:\n\n";
+
+            cart.forEach(item => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+                message += `• ${item.name} (${item.qty}x) — *$${subtotal.toLocaleString('es-MX')} MXN*\n`;
+            });
+
+            message += `\n💰 *Total Estimado de Inversión:* $${total.toLocaleString('es-MX')} MXN\n\n`;
+            message += "¿Qué disponibilidad tienen en agenda?";
+
+            window.open(`https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // --- MENÚ MÓVIL ---
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = menuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // --- INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderServices(servicesData);
+        });
+    </script>
+</body>
+
+</html>

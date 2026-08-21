@@ -3,54 +3,47 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>360 Foto & Video</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Estudio 360 - Bodas & Eventos</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* ==========================================
-           VARIABLES (Nueva paleta Elegante/Premium)
+           VARIABLES & PALETA GLOBAL
         ========================================== */
         :root {
+            --azul-oscuro: #0a1626;
             --azul: #10233f;
-            --azul-claro: #1e3b63;
+            --azul-card: #162c4e;
+            --azul-hover: #1e3b63;
             --dorado: #c9a44c;
             --dorado-claro: #dfc477;
             --blanco: #ffffff;
-            --gris: #f7f7f5;
-            --texto: #333;
+            --texto-gris: #cbd5e1;
             --max-width: 1200px;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.12);
+            --safe-bottom: max(20px, env(safe-area-inset-bottom));
         }
 
-        /* ==========================================
-           RESET
-        ========================================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            color: var(--texto);
-            background: #fff;
-            padding-top: 75px;
-        }
-
-        img {
-            max-width: 100%;
-            display: block;
+            color: var(--blanco);
+            background-color: var(--azul-oscuro);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
         a {
@@ -58,110 +51,118 @@
             color: inherit;
         }
 
-        .container {
-            width: 90%;
-            max-width: var(--max-width);
-            margin: auto;
-        }
-
         /* ==========================================
-           NAVEGACIÓN (Navbar Premium)
+           HEADER LIMPIO
         ========================================== */
-        .navbar {
+        .header {
             position: fixed;
-            top: 0;
+            top: 20px;
             left: 0;
-            width: 100%;
-            height: 75px;
+            right: 0;
             z-index: 1000;
+            padding: 0 24px;
             display: flex;
-            align-items: center;
-            transition: .4s;
-            background: rgba(16, 35, 63, 0.95);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: var(--shadow);
+            justify-content: center;
         }
 
-        .navbar.scrolled {
-            background: rgba(16, 35, 63, 0.98);
-            box-shadow: 0 5px 25px rgba(0, 0, 0, .15);
-        }
-
-        .nav-container {
-            width: 90%;
+        .header__container {
+            width: 100%;
             max-width: var(--max-width);
-            margin: auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: transparent;
         }
 
-        .logo-text {
+        .header__logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header__logo img {
+            max-height: 46px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .logo-fallback {
             font-family: 'Playfair Display', serif;
-            color: var(--blanco);
-            font-size: 1.5rem;
-            font-weight: 500;
+            font-size: 1.3rem;
+            font-weight: 700;
             letter-spacing: 1px;
+            color: var(--blanco);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .logo-text span {
+        .logo-fallback span {
             color: var(--dorado-claro);
         }
 
-        .nav-links {
+        .header__actions-group {
             display: flex;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
+        }
+
+        .header__navegacion {
+            display: flex;
+            align-items: center;
+            gap: 26px;
             list-style: none;
         }
 
-        .nav-links a {
-            color: white;
-            font-size: .75rem;
+        .header__navegacion a {
+            color: var(--blanco);
+            font-size: 0.82rem;
             font-weight: 600;
             letter-spacing: 1px;
-            transition: .3s;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            transition: color 0.3s ease, transform 0.3s ease;
         }
 
-        .nav-links a:hover {
+        .header__navegacion a:hover,
+        .header__navegacion a.active-link {
             color: var(--dorado-claro);
+            transform: translateY(-2px);
         }
 
-        .header__actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .action-btn {
+        .btn-cart-nav {
             background: none;
             border: none;
-            font-size: 1.2rem;
+            color: white;
+            font-size: 1.3rem;
             cursor: pointer;
             position: relative;
-            color: white;
-            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
         }
 
-        .action-btn:hover {
+        .btn-cart-nav:hover {
             color: var(--dorado-claro);
         }
 
-        .badge {
+        .badge-cart {
             position: absolute;
             top: -8px;
-            right: -8px;
-            background-color: var(--dorado);
+            right: -10px;
+            background: var(--dorado);
             color: white;
             font-size: 0.7rem;
+            font-weight: 700;
             width: 18px;
             height: 18px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
+        }
+
+        .badge-cart.hidden {
+            display: none;
         }
 
         .menu-btn {
@@ -169,420 +170,374 @@
             color: white;
             font-size: 24px;
             cursor: pointer;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
         }
 
         /* ==========================================
-           HERO / INICIO
+           HERO DE BODAS
         ========================================== */
-        #inicio {
-            height: 75vh;
-            min-height: 500px;
+        .wedding-hero {
             position: relative;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
+            padding: 140px 20px 60px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(10,22,38,0.85) 0%, rgba(10,22,38,0.98) 100%),
+                        url('Imagenes/portada-sesion.jpg') center/cover no-repeat;
+            border-bottom: 1px solid rgba(201, 164, 76, 0.2);
         }
 
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(90deg, rgba(16, 35, 63, 0.85), rgba(0, 0, 0, .3)), url("img/portada.jpg");
-            background-size: cover;
-            background-position: center;
-            z-index: -2;
-        }
-
-        .hero-content {
-            color: white;
-        }
-
-        .hero-content h1 {
+        .wedding-hero h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
-            font-weight: 400;
-            line-height: 1.1;
-            max-width: 800px;
+            font-size: clamp(2.4rem, 6vw, 4.2rem);
+            font-weight: 900;
+            color: var(--blanco);
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
         }
 
-        .hero-content h1 span {
-            color: var(--dorado-claro);
+        .wedding-hero p {
+            font-family: 'Playfair Display', serif;
             font-style: italic;
-        }
-
-        .hero-content p {
-            margin-top: 20px;
-            max-width: 500px;
-            line-height: 1.7;
-            font-size: 0.95rem;
-            color: #e2e8f0;
+            color: var(--dorado-claro);
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         /* ==========================================
-           BOTONES & TITULOS
+           CATÁLOGO DE SERVICIOS
         ========================================== */
-        .btn {
-            display: inline-block;
-            padding: 12px 26px;
-            border-radius: 4px;
-            font-size: .8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: .3s;
-            cursor: pointer;
-            border: none;
-        }
-
-        .btn-gold {
-            background: var(--dorado);
-            color: white;
-        }
-
-        .btn-gold:hover {
-            background: var(--dorado-claro);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            border: 1px solid var(--azul);
-            color: var(--azul);
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background: var(--azul);
-            color: white;
-        }
-
-        .section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title span {
-            color: var(--dorado);
-            font-size: .75rem;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        .section-title h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--azul);
-            font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-            font-weight: 500;
-            margin-top: 8px;
-        }
-
-        .divider {
-            width: 60px;
-            height: 2px;
-            background: var(--dorado);
-            margin: 15px auto;
-        }
-
-        /* ==========================================
-           PAQUETES PREDISEÑADOS (10% OFF INCLUIDO)
-        ========================================== */
-        #paquetes {
-            background: var(--gris);
-        }
-
-        .packages {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-        }
-
-        .package {
-            background: white;
-            padding: 40px 25px;
-            border: 1px solid #e5e7eb;
-            position: relative;
-            transition: .4s;
-            display: flex;
-            flex-direction: column;
-            border-radius: 4px;
-        }
-
-        .package:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .package.featured {
-            border: 2px solid var(--dorado);
-        }
-
-        .featured-label {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--dorado);
-            color: white;
-            padding: 6px 18px;
-            font-size: .65rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .package h3 {
-            font-family: 'Playfair Display', serif;
-            color: var(--azul);
-            text-align: center;
-            font-size: 1.6rem;
-            margin-bottom: 5px;
-        }
-
-        .price-box {
-            text-align: center;
-            margin: 15px 0 25px;
-        }
-
-        .old-price {
-            text-decoration: line-through;
-            color: #9ca3af;
-            font-size: 0.9rem;
-            display: block;
-        }
-
-        .price {
-            color: var(--dorado);
-            font-size: 2rem;
-            font-weight: 600;
-        }
-
-        .pkg-savings {
-            font-size: 0.75rem;
-            color: #16a34a;
-            font-weight: 600;
-            background: #f0fdf4;
-            padding: 2px 8px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 3px;
-        }
-
-        .package ul {
-            list-style: none;
-            margin-bottom: 30px;
+        .main-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
             flex-grow: 1;
         }
 
-        .package li {
-            padding: 10px 0;
-            font-size: .85rem;
-            color: #555;
-            border-bottom: 1px solid #f3f4f6;
+        .section-header {
+            text-align: center;
+            margin-bottom: 35px;
         }
 
-        .package li::before {
-            content: "✓";
-            color: var(--dorado);
-            margin-right: 8px;
-            font-weight: bold;
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--blanco);
+            margin-bottom: 8px;
         }
 
-        /* ==========================================
-           CATÁLOGO DE SERVICIOS INDIVIDUALES
-        ========================================== */
-        .search-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
+        .section-header .line {
+            width: 60px;
+            height: 3px;
+            background: var(--dorado);
+            margin: 0 auto 10px;
+            border-radius: 2px;
         }
 
-        .search-input {
-            width: 100%;
-            max-width: 500px;
-            padding: 12px 20px;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            font-size: .9rem;
-            outline: none;
-            font-family: inherit;
+        .section-header p {
+            color: var(--texto-gris);
+            font-size: 0.95rem;
         }
 
-        .search-input:focus {
-            border-color: var(--dorado);
-        }
-
-        .filters {
+        .filter-container {
             display: flex;
             justify-content: center;
             gap: 10px;
             flex-wrap: wrap;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
         .filter-btn {
-            padding: 8px 18px;
-            border: 1px solid #cbd5e1;
-            background: transparent;
+            background: var(--azul-card);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--blanco);
+            padding: 9px 20px;
+            border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: .3s;
-            color: #555;
-            border-radius: 4px;
+            transition: all 0.3s ease;
         }
 
-        .filter-btn--active, .filter-btn:hover {
-            background: var(--azul);
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--dorado);
+            border-color: var(--dorado);
             color: white;
-            border-color: var(--azul);
+            box-shadow: 0 4px 15px rgba(201, 164, 76, 0.3);
         }
 
-        .catalog-grid {
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
         }
 
-        .producto-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
+        .product-card {
+            background: var(--azul-card);
+            border-radius: 16px;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
-            transition: .3s;
         }
 
-        .producto-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            border-color: rgba(201, 164, 76, 0.4);
         }
 
-        .producto-card img {
+        .product-img-wrapper {
+            position: relative;
             width: 100%;
-            height: 180px;
-            object-fit: cover;
+            height: 200px;
+            background: var(--azul);
+            overflow: hidden;
         }
 
-        .producto-info {
+        .product-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
             padding: 20px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
+            justify-content: space-between;
         }
 
-        .producto-info h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.15rem;
-            color: var(--azul);
-            margin-bottom: 10px;
+        .product-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--blanco);
+            margin-bottom: 8px;
         }
 
-        .producto-precio {
-            color: var(--dorado);
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-top: auto;
+        .product-desc {
+            font-size: 0.82rem;
+            color: var(--texto-gris);
+            line-height: 1.4;
             margin-bottom: 15px;
         }
 
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .product-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dorado-claro);
+        }
+
+        .btn-add {
+            background: var(--dorado);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-add:hover {
+            background: var(--dorado-claro);
+        }
+
         /* ==========================================
-           CARRITO SIDEBAR (Estilo Elegante)
+           CARRITO LATERAL & OVERLAY
         ========================================== */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 38, 0.6);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1999;
+        }
+
+        .cart-overlay--open {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .cart-modal {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 380px;
-    max-width: 100vw;
-    height: 100%;                  /* Forzado al 100% de la ventana visible */
-    height: -webkit-fill-available;/* Evita que la barra de Safari/Chrome recorte el pie */
-    background: white;
-    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
-    z-index: 2000;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    padding: 20px;
-    padding-bottom: max(20px, env(safe-area-inset-bottom)); /* Respeta bordes de iPhone */
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    overscroll-behavior: contain;  /* Evita arrastrar el navegador */
-}
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 380px;
+            max-width: 100vw;
+            height: 100%;
+            height: -webkit-fill-available;
+            background: var(--azul);
+            box-shadow: -5px 0 35px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            padding: 24px;
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            border-left: 1px solid rgba(201, 164, 76, 0.2);
+        }
 
         .cart-modal--open {
             transform: translateX(0);
         }
 
-       /* Área de artículos con scroll aislado */
-.cart-items-list {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Scroll suave nativo en iOS */
-    overscroll-behavior: contain;      /* Bloquea el scroll del fondo */
-    margin: 10px 0;
-    padding-right: 5px;
-    min-height: 0;
-}
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-header h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--blanco);
+            font-size: 1.5rem;
+        }
+
+        .cart-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--texto-gris);
+            cursor: pointer;
+        }
+
+        .cart-items-list {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            margin: 15px 0;
+            padding-right: 5px;
+        }
 
         .cart-item-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             font-size: 0.85rem;
         }
 
-        .cart-item-row strong {
-            color: var(--azul);
-        }
-
-        .cart-total-box {
-            border-top: 1px solid var(--azul);
-            padding-top: 20px;
-            margin-top: 15px;
-            text-align: right;
-        }
-
-        .cart-total-box h4 {
-            font-size: 0.85rem;
-            color: #777;
-        }
-
-        .cart-total-box span {
-            font-size: 1.6rem;
+        .cart-item-title {
+            color: var(--blanco);
             font-weight: 600;
-            color: var(--dorado);
             display: block;
-            margin-top: 5px;
+            margin-bottom: 2px;
         }
-/* Pie fijo */
-.cart-footer {
-    flex-shrink: 0;
-    border-top: 1px solid #e5e7eb;
-    padding-top: 12px;
-    background: white;
-}
+
+        .cart-item-sub {
+            color: var(--texto-gris);
+            font-size: 0.75rem;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--dorado-claro);
+            margin-right: 10px;
+        }
+
+        .cart-del-btn {
+            color: #ef4444;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 4px;
+        }
+
+        .cart-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 15px;
+        }
+
+        .cart-total-row span:first-child {
+            font-size: 0.8rem;
+            color: var(--texto-gris);
+            font-weight: 600;
+        }
+
+        .cart-total-row span:last-child {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dorado-claro);
+        }
+
+        .btn-whatsapp-checkout {
+            width: 100%;
+            padding: 14px;
+            background: #1ebe5d;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-whatsapp-checkout:hover {
+            background: #179b4b;
+        }
+
         /* --- TOAST --- */
         .toast {
             position: fixed;
             bottom: 25px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background-color: var(--azul);
+            background: var(--dorado);
             color: white;
-            padding: 12px 28px;
-            border-radius: 4px;
+            padding: 10px 24px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
             opacity: 0;
             transition: all 0.3s ease;
             z-index: 3000;
-            box-shadow: var(--shadow-hover);
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            pointer-events: none;
         }
 
         .toast--visible {
@@ -590,38 +545,51 @@
             opacity: 1;
         }
 
-        .loader {
-            grid-column: 1 / -1;
+        /* ==========================================
+           FOOTER
+        ========================================== */
+        footer {
             text-align: center;
-            padding: 40px;
-            color: var(--azul);
-            font-weight: 500;
+            padding: 25px 20px var(--safe-bottom);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            background: var(--azul);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            letter-spacing: 1px;
         }
 
-        
-
         /* ==========================================
-           RESPONSIVE
+           RESPONSIVE MOBILE (< 768px)
         ========================================== */
-        @media(max-width:900px) {
-            .nav-links {
-                position: absolute;
-                top: 75px;
-                left: 0;
-                width: 100%;
-                background: var(--azul);
-                flex-direction: column;
-                padding: 30px;
-                gap: 20px;
-                display: none;
-            }
-
-            .nav-links.active {
-                display: flex;
+        @media (max-width: 768px) {
+            .header {
+                top: 15px;
+                padding: 0 18px;
             }
 
             .menu-btn {
                 display: block;
+            }
+
+            .header__navegacion {
+                position: fixed;
+                top: 75px;
+                left: 16px;
+                right: 16px;
+                background: rgba(16, 35, 63, 0.98);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-radius: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                flex-direction: column;
+                padding: 25px 20px;
+                gap: 18px;
+                display: none;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            }
+
+            .header__navegacion.active {
+                display: flex;
             }
         }
     </style>
@@ -629,363 +597,338 @@
 
 <body>
 
-    <header class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#inicio" class="logo-text">
-                ESTUDIO <span>360</span>
+    <header class="header">
+        <div class="header__container">
+            <a href="Home.html" class="header__logo">
+                <img src="Imagenes/logo-360-transparente.png" alt="Logo 360" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
+                <span id="alt-logo" class="logo-fallback" style="display: none;">ESTUDIO <span>360</span></span>
             </a>
 
-            <div class="menu-btn" id="menuBtn">☰</div>
+            <div class="header__actions-group">
+                <nav class="header__navegacion" id="navLinks">
+                    <a href="Home.html">Home</a>
+                    <a href="index.html" class="active-link">Servicios</a>
+                    <a href="#paquetes">Paquetes</a>
+                    <a href="#contacto">Contacto</a>
+                </nav>
 
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#inicio">INICIO</a></li>
-                <li><a href="#paquetes">PAQUETES</a></li>
-                <li><a href="#servicios-section">SERVICIOS</a></li>
-                <li><a href="#contacto">CONTACTO</a></li>
-            </ul>
-
-            <div class="header__actions">
-                <button class="action-btn" id="btn-cart" aria-label="Ver Carrito">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="badge hidden" id="badge-cart">0</span>
+                <button class="btn-cart-nav" onclick="openCart()" aria-label="Ver Carrito">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="badge-cart hidden" id="badgeCart">0</span>
                 </button>
+
+                <div class="menu-btn" id="menuBtn">
+                    <i class="fas fa-bars"></i>
+                </div>
             </div>
         </div>
     </header>
 
-    <section id="inicio">
-        <div class="hero-bg"></div>
-        <div class="container hero-content">
-            <h1>CAPTURAMOS <span>momentos</span><br>CREAMOS RECUERDOS</h1>
-            <p>Fotografía y video profesional con una perspectiva artística y elegante para blindar tus mejores historias.</p>
-        </div>
+    <section class="wedding-hero">
+        <h1>Bodas & Eventos</h1>
+        <p>"Capturando la esencia de tu día inolvidable"</p>
     </section>
 
-    <section id="paquetes" class="section">
-        <div class="container">
-            <div class="section-title">
-                <span>CONTRATACIÓN INTEGRAL</span>
-                <h2>Paquetes Todo Incluido</h2>
-                <div class="divider"></div>
+    <main class="main-content">
+        <section id="paquetes" class="section-header">
+            <h2>Paquetes y Cobertura</h2>
+            <div class="line"></div>
+            <p>Selecciona los servicios que deseas incluir para tu cotización</p>
+        </section>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterCatalog('todos')">Todos</button>
+            <button class="filter-btn" onclick="filterCatalog('paquete')">Paquetes Completos</button>
+            <button class="filter-btn" onclick="filterCatalog('fotografia')">Fotografía</button>
+            <button class="filter-btn" onclick="filterCatalog('video')">Video & Dron</button>
+            <button class="filter-btn" onclick="filterCatalog('impresion')">Impresiones & Álbums</button>
+        </div>
+
+        <div class="services-grid" id="catalogo"></div>
+    </main>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+    <aside class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h2>Tu Pedido</h2>
+            <button class="cart-close-btn" onclick="closeCart()">&times;</button>
+        </div>
+
+        <div class="cart-items-list" id="cartItemsContainer">
+            <p style="color: var(--texto-gris); text-align: center; margin-top: 50px; font-size: 0.85rem;">El carrito está vacío</p>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total-row">
+                <span>TOTAL ESTIMADO:</span>
+                <span id="cartTotalPrice">$0.00</span>
             </div>
-            <div class="packages" id="packages-grid">
-                </div>
+            <button class="btn-whatsapp-checkout" onclick="checkoutWhatsApp()">
+                <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> Pedir Cotización por WhatsApp
+            </button>
         </div>
-    </section>
-
-    <section id="servicios-section" class="section">
-        <div class="container">
-            <div class="section-title">
-                <span>SERVICIOS A LA CARTA</span>
-                <h2>Catálogo de Servicios</h2>
-                <div class="divider"></div>
-            </div>
-
-            <div class="search-container">
-                <input type="text" id="search-input" placeholder="Buscar sesión, dron, libro, video..." class="search-input">
-            </div>
-
-            <div class="filters">
-                <button class="filter-btn filter-btn--active" data-cat="all">Todos los servicios</button>
-                <button class="filter-btn" data-cat="basico">Básico</button>
-                <button class="filter-btn" data-cat="estandar">Estándar</button>
-                <button class="filter-btn" data-cat="deluxe">Deluxe</button>
-                <button class="filter-btn" data-cat="premium">Premium</button>
-            </div>
-
-            <div class="catalog-grid" id="catalogo">
-                <div class="loader"><i class="fas fa-spinner fa-spin"></i> Cargando servicios...</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contacto" class="section" style="background: var(--azul); color: white; text-align: center;">
-        <div class="container">
-            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 15px;">¿Hagamos algo increíble juntos?</h2>
-            <p style="color: #cbd5e1; max-width: 600px; margin: 0 auto 30px; line-height: 1.7;">Añade los servicios o el paquete que requieras en tu carrito y procesa tu pedido para recibir asistencia de disponibilidad de forma inmediata.</p>
-            <a href="#paquetes" class="btn btn-gold">VER COBERTURAS</a>
-        </div>
-    </section>
-
-    <aside class="cart-modal" id="cart-modal">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="margin: 0; color: var(--azul); font-family: 'Playfair Display', serif;">Tu Pedido</h2>
-            <button onclick="toggleCart()" style="background:none; border:none; font-size: 1.8rem; cursor:pointer; color: #888;">&times;</button>
-        </div>
-        <div class="cart-items-list" id="cart-items-container">
-            <p style="color: #888; text-align: center; margin-top: 50px;">El carrito está vacío</p>
-        </div>
-        <div class="cart-total-box">
-            <h4>TOTAL ESTIMADO</h4>
-            <span id="cart-total-price">$0.00</span>
-        </div>
-        <button class="btn btn-gold" id="btn-checkout" style="margin-top: 25px; padding: 14px; background-color: #25D366; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
-            <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i> Enviar Pedido a WhatsApp
-        </button>
     </aside>
 
     <div id="toast" class="toast">Notificación</div>
 
+    <footer id="contacto">
+        <p>&copy; 2026 Estudio 360. Todos los derechos reservados.</p>
+    </footer>
+
     <script>
-        // --- 1. CONFIGURACIÓN DEL NEGOCIO ---
-        const PHONE_NUMBER = "5211891526"; // Configura tu WhatsApp aquí
-        const ALLOW_REPEAT_IDS = [1, 2];      // IDs de 1 hora de Fotografía y Video que permiten repetirse
+        // --- NÚMERO DE CONTACTO ---
+        const PHONE_NUMBER = "5211891526"; // Tu WhatsApp con lada
 
-        const rawData = [
-            { id: 1, name: "1 hora de Fotografía", price: 12.50, category: ["basico", "estandar", "deluxe", "premium"], img: "Imagenes/Tiempo_Foto.png" },
-            { id: 2, name: "1 hora de Video", price: 14.00, category: ["basico", "estandar", "deluxe", "premium"], img: "Imagenes/Tiempo_Video.png" },
-            { id: 3, name: "100 fotos en físico 6x8", price: 4.50, category: ["estandar", "deluxe", "premium"], img: "Imagenes/Fotos_Fisico.jpg" },
-            { id: 4, name: "Ampliación 20x30", price: 25.00, category: ["estandar", "deluxe", "premium"], img: "Imagenes/Ampliacion.jpg" },
-            { id: 5, name: "Sesión de fotos 20-30 min", price: 18.00, category: ["estandar", "deluxe", "premium"], img: "Imagenes/Sesion.jpg" },
-            { id: 6, name: "Save the Date (Sesión + 20x30)", price: 18.00, category: ["deluxe", "premium"], img: "Imagenes/Save_Date.jpg" },
-            { id: 7, name: "Getting Ready", price: 18.00, category: ["premium"], img: "Imagenes/Gettin.jpg" },
-            { id: 8, name: "Photo Book 8x20", price: 18.00, category: ["deluxe", "premium"], img: "Imagenes/Photobook.JPG" },
-            { id: 9, name: "Tomas con Dron", price: 18.00, category: ["deluxe", "premium"], img: "Imagenes/Tomas_Dron.webp" },
-            { id: 10, name: "Resumen de Película (1:30-3:00 min)", price: 18.00, category: ["premium"], img: "Imagenes/Resumen.jpg" }
-        ];
-
-        const packageDefinitions = [
-            { key: "basico", name: "Paquete Básico", highlight: false },
-            { key: "estandar", name: "Paquete Estándar", highlight: false },
-            { key: "deluxe", name: "Paquete Deluxe", highlight: true, tag: "Más Elegido" },
-            { key: "premium", name: "Paquete Premium", highlight: false }
-        ];
-
-        const cart = new Map();
-
-        // --- 2. UI GENERAL & TOAST ---
-        const menuBtn = document.getElementById("menuBtn");
-        const navLinks = document.getElementById("navLinks");
-        menuBtn.addEventListener("click", () => navLinks.classList.toggle("active"));
-        document.querySelectorAll(".nav-links a").forEach(l => l.addEventListener("click", () => navLinks.classList.remove("active")));
-
-        const createNotifier = () => {
-            const toastEl = document.getElementById('toast');
-            let timeoutId;
-            return (message) => {
-                toastEl.textContent = message;
-                toastEl.classList.add('toast--visible');
-                if (timeoutId) clearTimeout(timeoutId);
-                timeoutId = setTimeout(() => toastEl.classList.remove('toast--visible'), 3000);
-            };
-        };
-        const notify = createNotifier();
-
-        // --- 3. RENDERERS ---
-        const renderPackages = (products) => {
-            const container = document.getElementById('packages-grid');
-            container.innerHTML = packageDefinitions.map(pkg => {
-                const includedItems = products.filter(p => p.category.includes(pkg.key));
-                const originalSum = includedItems.reduce((sum, item) => sum + item.price, 0);
-                const discountedPrice = originalSum * 0.90; // 10% de descuento automático
-
-                return `
-                    <div class="package ${pkg.highlight ? 'featured' : ''}">
-                        ${pkg.tag ? `<div class="featured-label">${pkg.tag}</div>` : ''}
-                        <h3>${pkg.name}</h3>
-                        <div class="price-box">
-                            <span class="old-price">$${originalSum.toFixed(2)}</span>
-                            <span class="price">$${discountedPrice.toFixed(2)}</span>
-                            <div><span class="pkg-savings">Ahorro Integral 10%</span></div>
-                        </div>
-                        <ul>
-                            ${includedItems.map(item => `<li>${item.name}</li>`).join('')}
-                        </ul>
-                        <button class="btn btn-gold" onclick="addPackageToCart('${pkg.key}', '${pkg.name}', ${discountedPrice})">
-                            ELEGIR PAQUETE
-                        </button>
-                    </div>
-                `;
-            }).join('');
-        };
-
-        const renderCatalog = (productsList) => {
-            const container = document.getElementById('catalogo');
-            if (productsList.length === 0) {
-                container.innerHTML = '<p style="color: #888; text-align:center; grid-column:1/-1; padding:30px;">No se encontraron servicios.</p>';
-                return;
+        // --- SERVICIOS ---
+        const servicesData = [
+            {
+                id: 1,
+                name: "Paquete Boda Platino",
+                category: "paquete",
+                price: 18500,
+                desc: "Cobertura total foto + video cinema, tomas con dron, sesión previa y Photobook de lujo.",
+                img: "Imagenes/portada-sesion.jpg"
+            },
+            {
+                id: 2,
+                name: "Paquete Boda Oro",
+                category: "paquete",
+                price: 12500,
+                desc: "Cobertura completa ceremonia y recepción, fotografía ilimitada y video resumen HD.",
+                img: "Imagenes/Sesion.jpg"
+            },
+            {
+                id: 3,
+                name: "Sesión Save The Date / Pre-Boda",
+                category: "fotografia",
+                price: 2800,
+                desc: "2 horas de sesión en locación a elegir con entrega digital en alta resolución.",
+                img: "Imagenes/Save_Date.jpg"
+            },
+            {
+                id: 4,
+                name: "Getting Ready (Preparativos)",
+                category: "fotografia",
+                price: 2200,
+                desc: "Fotografía y video íntimo durante el maquillaje y vestimenta de los novios.",
+                img: "Imagenes/Gettin.jpg"
+            },
+            {
+                id: 5,
+                name: "Tomas Aéreas con Dron 4K",
+                category: "video",
+                price: 2500,
+                desc: "Tomas panorámicas del recinto, iglesia y tomas grupales con piloto certificado.",
+                img: "Imagenes/Tomas_Dron.webp"
+            },
+            {
+                id: 6,
+                name: "Photobook Editorial 30x30cm",
+                category: "impresion",
+                price: 3500,
+                desc: "Álbum de pasta dura en piel sintética con papel fotográfico de alta durabilidad.",
+                img: "Imagenes/Photobook.JPG"
+            },
+            {
+                id: 7,
+                name: "Ampliación Enmarcada 20x24\"",
+                category: "impresion",
+                price: 1800,
+                desc: "Fotografía principal texturizada con marco de madera de lujo para bienvenida.",
+                img: "Imagenes/Ampliacion.jpg"
             }
-            container.innerHTML = productsList.map(product => `
-                <article class="producto-card">
-                    <img src="${product.img}" alt="${product.name}" onerror="this.src='https://placehold.co/400x300/10233f/FFFFFF?text=Estudio+360'">
-                    <div class="producto-info">
-                        <h3>${product.name}</h3>
-                        <div class="producto-precio">$${product.price.toFixed(2)}</div>
-                        <button class="btn btn-outline" onclick="addProductToCart(${product.id})">Añadir al Carrito</button>
+        ];
+
+        let cart = new Map();
+
+        // --- TOAST NOTIFIER ---
+        const notify = (message) => {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('toast--visible');
+            setTimeout(() => toast.classList.remove('toast--visible'), 2500);
+        };
+
+        // --- RENDERIZAR SERVICIOS ---
+        function renderServices(items) {
+            const container = document.getElementById('catalogo');
+            if (!container) return;
+
+            container.innerHTML = items.map(item => `
+                <article class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80';">
+                    </div>
+                    <div class="product-info">
+                        <div>
+                            <h3 class="product-title">${item.name}</h3>
+                            <p class="product-desc">${item.desc}</p>
+                        </div>
+                        <div class="product-bottom">
+                            <span class="product-price">$${item.price.toLocaleString('es-MX')}</span>
+                            <button class="btn-add" onclick="addToCart(${item.id})">
+                                <i class="fas fa-plus"></i> Agregar
+                            </button>
+                        </div>
                     </div>
                 </article>
             `).join('');
-        };
+        }
 
-        // --- 4. FILTROS INDEPENDIENTES (SOLO VISTA) ---
-        let currentCategory = 'all';
-        const applyFiltersAndSearch = () => {
-            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim();
-            const filtered = rawData.filter(p => {
-                const matchesCat = (currentCategory === 'all') || p.category.includes(currentCategory);
-                const matchesSearch = p.name.toLowerCase().includes(searchTerm);
-                return matchesCat && matchesSearch;
-            });
-            renderCatalog(filtered);
-        };
+        // --- FILTROS ---
+        function filterCatalog(cat) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
 
-        const setupFilters = () => {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    buttons.forEach(b => b.classList.remove('filter-btn--active'));
-                    e.target.classList.add('filter-btn--active');
-                    currentCategory = e.target.dataset.cat;
-                    applyFiltersAndSearch();
-                });
-            });
-            document.getElementById('search-input').addEventListener('input', applyFiltersAndSearch);
-        };
-
-        // --- 5. LOGICA DEL CARRITO ---
-        const openCart = () => {
-    cartModal.classList.add('cart-modal--open');
-    cartOverlay.classList.add('cart-overlay--open');
-    // Bloquear scroll de la página de fondo
-    document.body.style.overflow = 'hidden';
-    document.body.style.touchAction = 'none';
-};
-
-const closeCart = () => {
-    cartModal.classList.remove('cart-modal--open');
-    cartOverlay.classList.remove('cart-overlay--open');
-    // Restaurar scroll normal
-    document.body.style.overflow = '';
-    document.body.style.touchAction = '';
-};
-
-
-        const addProductToCart = (id) => {
-            const product = rawData.find(p => p.id === id);
-            const cartKey = `prod_${id}`;
-            const allowsMultiple = ALLOW_REPEAT_IDS.includes(id);
-
-            if (cart.has(cartKey)) {
-                if (!allowsMultiple) {
-                    notify(`"${product.name}" ya está en tu lista de cotización.`);
-                    return;
-                }
-                const item = cart.get(cartKey);
-                item.qty += 1;
-                notify(`Añadida hora extra de: ${product.name}`);
+            if (cat === 'todos') {
+                renderServices(servicesData);
             } else {
-                cart.set(cartKey, { name: product.name, price: product.price, qty: 1 });
-                notify(`"${product.name}" agregado.`);
+                const filtered = servicesData.filter(s => s.category === cat);
+                renderServices(filtered);
             }
-            updateCartUI();
-        };
+        }
 
-        const addPackageToCart = (pkgKey, pkgName, pkgPrice) => {
-            const cartKey = `pkg_${pkgKey}`;
+        // --- APERTURA Y CIERRE DEL CARRITO ---
+        const cartModal = document.getElementById('cartModal');
+        const cartOverlay = document.getElementById('cartOverlay');
 
-            if (cart.has(cartKey)) {
-                notify(`El ${pkgName} ya se encuentra en tu carrito.`);
-                return;
+        function openCart() {
+            cartModal.classList.add('cart-modal--open');
+            cartOverlay.classList.add('cart-overlay--open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            cartModal.classList.remove('cart-modal--open');
+            cartOverlay.classList.remove('cart-overlay--open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && cartModal.classList.contains('cart-modal--open')) {
+                closeCart();
+            }
+        });
+
+        // --- LÓGICA DEL CARRITO ---
+        function addToCart(id) {
+            const item = servicesData.find(s => s.id === id);
+            if (!item) return;
+
+            if (cart.has(id)) {
+                cart.get(id).qty += 1;
+            } else {
+                cart.set(id, { ...item, qty: 1 });
             }
 
-            // Regla estricta: Limpiar cualquier paquete previo de la cesta para dejar solo uno
-            for (const key of cart.keys()) {
-                if (key.startsWith('pkg_')) cart.delete(key);
-            }
-
-            cart.set(cartKey, { name: `${pkgName} (10% OFF Incluido)`, price: pkgPrice, qty: 1 });
             updateCartUI();
-            notify(`Has seleccionado el ${pkgName}.`);
-        };
+            notify(`"${item.name}" agregado`);
+        }
 
-        const removeFromCart = (key) => {
-            cart.delete(key);
+        function removeFromCart(id) {
+            cart.delete(id);
             updateCartUI();
-        };
+        }
 
-        const updateCartUI = () => {
-            const container = document.getElementById('cart-items-container');
-            const badge = document.getElementById('badge-cart');
-            const totalEl = document.getElementById('cart-total-price');
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const badge = document.getElementById('badgeCart');
+            const totalEl = document.getElementById('cartTotalPrice');
 
-            let totalItems = 0, totalPrice = 0;
+            let total = 0;
+            let count = 0;
 
             if (cart.size === 0) {
-                container.innerHTML = '<p style="color: #888; text-align: center; margin-top: 50px;">El carrito está vacío</p>';
+                container.innerHTML = '<p style="color: var(--texto-gris); text-align: center; margin-top: 50px; font-size: 0.85rem;">El carrito está vacío</p>';
                 badge.classList.add('hidden');
                 totalEl.textContent = '$0.00';
                 return;
             }
 
             let html = '';
-            for (const [key, item] of cart) {
-                totalItems += item.qty;
+            cart.forEach((item, id) => {
                 const subtotal = item.price * item.qty;
-                totalPrice += subtotal;
+                total += subtotal;
+                count += item.qty;
 
                 html += `
                     <div class="cart-item-row">
                         <div>
-                            <strong>${item.name}</strong><br>
-                            <small>${item.qty} x $${item.price.toFixed(2)}</small>
+                            <span class="cart-item-title">${item.name}</span>
+                            <span class="cart-item-sub">${item.qty} x $${item.price.toLocaleString('es-MX')}</span>
                         </div>
-                        <div style="display:flex; align-items:center; gap:12px;">
-                            <span style="font-weight:600;">$${subtotal.toFixed(2)}</span>
-                            <button onclick="removeFromCart('${key}')" style="color:#ef4444; border:none; background:none; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                        <div style="display:flex; align-items:center;">
+                            <span class="cart-item-price">$${subtotal.toLocaleString('es-MX')}</span>
+                            <button class="cart-del-btn" onclick="removeFromCart(${id})" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </button>
                         </div>
                     </div>
                 `;
-            }
+            });
 
             container.innerHTML = html;
-            badge.textContent = totalItems;
+            badge.textContent = count;
             badge.classList.remove('hidden');
-            totalEl.textContent = '$' + totalPrice.toFixed(2);
-        };
+            totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
+        }
 
-        const toggleCart = () => document.getElementById('cart-modal').classList.toggle('cart-modal--open');
-
-        // --- 6. SALIDA INTEGRADA A WHATSAPP ---
-        const checkout = () => {
+        // --- CHECKOUT WHATSAPP ---
+        function checkoutWhatsApp() {
             if (cart.size === 0) {
-                notify("¡Tu carrito está vacío!");
+                notify("El carrito está vacío");
                 return;
             }
 
-            const totalPrice = document.getElementById('cart-total-price').textContent;
-            let message = "📸 *SOLICITUD DE COTIZACIÓN - ESTUDIO 360* 📸\n\n";
-            message += "Hola, me gustaría confirmar disponibilidad para la siguiente orden de servicios:\n\n";
+            let total = 0;
+            let message = "📸 *COTIZACIÓN DE BODA - ESTUDIO 360* 📸\n\n";
+            message += "Hola, me gustaría consultar disponibilidad para estos servicios:\n\n";
 
-            for (const [key, item] of cart) {
-                const subtotal = (item.price * item.qty).toFixed(2);
-                if (key.startsWith('pkg_')) {
-                    message += `⭐ *${item.name}*: $${subtotal}\n`;
-                } else {
-                    const cant = item.qty > 1 ? ` (x${item.qty} horas)` : '';
-                    message += `▫️ ${item.name}${cant} — *$${subtotal}*\n`;
-                }
-            }
+            cart.forEach(item => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+                message += `• ${item.name} (${item.qty}x) — *$${subtotal.toLocaleString('es-MX')} MXN*\n`;
+            });
 
-            message += `\n💰 *Total Estimado de Inversión:* ${totalPrice}\n\n`;
-            message += "¿Qué datos necesitan para validar la fecha de mi evento? ¡Gracias!";
+            message += `\n💰 *Total Estimado:* $${total.toLocaleString('es-MX')} MXN\n\n`;
+            message += "¿Qué fechas tienen disponibles?";
 
-            window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
-            notify("Abriendo canal de WhatsApp...");
-        };
-
-        // --- 7. ARRANQUE ---
-        async function initApp() {
-            // Simulación asíncrona fluida
-            const products = await new Promise(res => setTimeout(() => res(rawData), 500));
-            renderPackages(products);
-            renderCatalog(products);
-            setupFilters();
-
-            document.getElementById('btn-cart').addEventListener('click', toggleCart);
-            document.getElementById('btn-checkout').addEventListener('click', checkout);
+            const url = `https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
         }
 
-        initApp();
+        // --- MENÚ MÓVIL ---
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = menuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        document.querySelectorAll('.header__navegacion a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = menuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+
+        // --- INICIALIZACIÓN ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderServices(servicesData);
+        });
     </script>
 </body>
 

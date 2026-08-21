@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Estudio 360 - Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           VARIABLES & PALETA GLOBAL
+        ========================================== */
+        :root {
+            --azul: #10233f;
+            --azul-claro: #1e3b63;
+            --dorado: #c9a44c;
+            --dorado-claro: #dfc477;
+            --blanco: #ffffff;
+            --max-width: 1200px;
+            --safe-bottom: max(20px, env(safe-area-inset-bottom));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--blanco);
+            background-color: var(--azul);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Capa de fondo fija */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(16,35,63,0.55), rgba(16,35,63,0.85)), 
+                        url('Imagenes/portada-sesion.jpg') center/cover no-repeat;
+            z-index: -1;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ==========================================
+           HEADER SIN BARRA / CONTENEDOR FLOTANTE
+        ========================================== */
+        .header {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .header__container {
+            width: 100%;
+            max-width: var(--max-width);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        .header__logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header__logo img {
+            max-height: 46px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .logo-fallback {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--blanco);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-fallback span {
+            color: var(--dorado-claro);
+        }
+
+        .header__navegacion {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            list-style: none;
+        }
+
+        .header__navegacion a {
+            color: var(--blanco);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .header__navegacion a:hover {
+            color: var(--dorado-claro);
+            transform: translateY(-2px);
+        }
+
+        .btn-nav {
+            background: var(--dorado);
+            padding: 10px 22px;
+            border-radius: 25px;
+            color: white !important;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(201, 164, 76, 0.35);
+            text-shadow: none !important;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-nav:hover {
+            background: var(--dorado-claro) !important;
+            transform: scale(1.05);
+        }
+
+        .menu-btn {
+            display: none;
+            color: white;
+            font-size: 26px;
+            cursor: pointer;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+        }
+
+        /* ==========================================
+           HERO TITLE & CALL TO ACTION
+        ========================================== */
+        .hero-title {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 40px;
+        }
+
+        .hero-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.2rem, 10vw, 7.5rem);
+            font-weight: 900;
+            color: var(--blanco);
+            text-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            line-height: 1;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .hero-title p {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.2rem, 3.5vw, 2.2rem);
+            font-weight: 400;
+            font-style: italic;
+            color: var(--dorado-claro);
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            letter-spacing: 1px;
+            margin-bottom: 35px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cta--gold {
+            background: var(--dorado);
+            color: white;
+            box-shadow: 0 6px 20px rgba(201, 164, 76, 0.4);
+        }
+
+        .btn-cta--gold:hover {
+            background: var(--dorado-claro);
+            transform: translateY(-3px);
+        }
+
+        .btn-cta--glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+        }
+
+        .btn-cta--glass:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* ==========================================
+           FOOTER
+        ========================================== */
+        footer {
+            text-align: center;
+            padding: 15px 20px var(--safe-bottom);
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 1px;
+        }
+
+        /* ==========================================
+           RESPONSIVE MOBILE (< 768px)
+        ========================================== */
+        @media (max-width: 768px) {
+            .header {
+                top: 15px;
+                padding: 0 18px;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .header__navegacion {
+                position: fixed;
+                top: 75px;
+                left: 16px;
+                right: 16px;
+                background: rgba(16, 35, 63, 0.96);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-radius: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.15);
+                flex-direction: column;
+                padding: 25px 20px;
+                gap: 18px;
+                display: none;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            }
+
+            .header__navegacion.active {
+                display: flex;
+            }
+
+            .btn-nav {
+                width: 100%;
+                text-align: center;
+            }
+
+            .hero-title {
+                padding-top: 100px;
+            }
+
+            .hero-actions {
+                width: 100%;
+                max-width: 280px;
+                flex-direction: column;
+            }
+
+            .btn-cta {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header__container">
+            <a href="Home.html" class="header__logo">
+                <img src="Imagenes/logo-360-transparente.png" alt="Logo 360" onerror="this.style.display='none'; document.getElementById('alt-logo').style.display='block';">
+                <span id="alt-logo" class="logo-fallback" style="display: none;">ESTUDIO <span>360</span></span>
+            </a>
+
+            <div class="menu-btn" id="menuBtn">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <nav class="header__navegacion" id="navLinks">
+                <a href="Home.html">Home</a>
+                <a href="index.html">Paquetes Bodas</a>
+                <a href="index.html#paquetes">Paquetes XV Años</a>
+                <a href="index.html#contacto">Sobre nosotros</a>
+                <a href="index.html" class="btn-nav">Cotizar Ahora</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="hero-title">
+        <h1>Estudio 360</h1>
+        <p>"Revive tu momento"</p>
+
+        <div class="hero-actions">
+            <a href="index.html" class="btn-cta btn-cta--gold">
+                <i class="fas fa-camera"></i> Paquetes Bodas
+            </a>
+            <a href="index.html#paquetes" class="btn-cta btn-cta--glass">
+                <i class="fas fa-gem"></i> Paquetes XV Años
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Estudio 360. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = menuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Cerrar menú al presionar un enlace
+        document.querySelectorAll('.header__navegacion a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = menuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+    </script>
+</body>
+
+</html>
