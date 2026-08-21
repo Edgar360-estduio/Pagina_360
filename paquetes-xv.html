@@ -268,7 +268,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
             gap: 25px;
             margin-bottom: 60px;
         }
@@ -309,7 +309,7 @@
         }
 
         .product-info {
-            padding: 20px;
+            padding: 22px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -317,17 +317,46 @@
         }
 
         .product-title {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--blanco);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .product-desc {
+            font-size: 0.85rem;
+            color: var(--texto-gris);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* --- LISTA EXCLUSIVA PARA PAQUETES --- */
+        .package-features-list {
+            list-style: none;
+            margin-bottom: 18px;
+            padding: 0;
+        }
+
+        .package-features-list li {
             font-size: 0.82rem;
             color: var(--texto-gris);
+            padding: 5px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
             line-height: 1.4;
-            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .package-features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .package-features-list li i {
+            color: var(--dorado-claro);
+            font-size: 0.75rem;
+            margin-top: 3px;
+            flex-shrink: 0;
         }
 
         .product-bottom {
@@ -341,7 +370,7 @@
 
         .product-price {
             font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--dorado-claro);
         }
@@ -607,9 +636,9 @@
             <div class="header__actions-group">
                 <nav class="header__navegacion" id="navLinks">
                     <a href="index.html">Home</a>
-                    <a href="paquetes-boda.html">Paquetes Bodas</a>
+                    <a href="paquetes-boda.html">Bodas</a>
                     <a href="paquetes-xv.html" class="active-link">XV Años</a>
-                    <a href="#contacto">Contacto</a>
+                    <a href="index.html#contacto">Contacto</a>
                 </nav>
 
                 <button class="btn-cart-nav" onclick="openCart()" aria-label="Ver Carrito">
@@ -677,16 +706,23 @@
     </footer>
 
     <script>
-        const PHONE_NUMBER = "5214611891526"; // Tu WhatsApp con lada
+        const PHONE_NUMBER = "5211891526"; // Tu WhatsApp con lada
 
-        // --- SERVICIOS Y PAQUETES EXCLUSIVOS DE XV AÑOS ---
+        // --- SERVICIOS Y PAQUETES (INCLUYE ARRAY DE ITEMS PARA LOS PAQUETES) ---
         const servicesData = [
             {
                 id: 1,
                 name: "Paquete XV Ensueño",
                 category: "paquete",
                 price: 15500,
-                desc: "Cobertura completa del evento, video cinemático, videoclip de semblanza, sesión casual de fotos y Photobook premium.",
+                isPackage: true,
+                items: [
+                    "Cobertura completa misa y recepción",
+                    "Video cinemático HD editado",
+                    "Videoclip de semblanza / infancia",
+                    "Sesión casual previa en locación",
+                    "Photobook conmemorativo premium"
+                ],
                 img: "Imagenes/portada-sesion.jpg"
             },
             {
@@ -694,7 +730,13 @@
                 name: "Paquete XV Esencial",
                 category: "paquete",
                 price: 9800,
-                desc: "Fotografía ilimitada durante la misa y la fiesta de gala, con entrega en galería digital HD organizada.",
+                isPackage: true,
+                items: [
+                    "Fotografía ilimitada durante misa y fiesta",
+                    "Video resumen con los mejores momentos",
+                    "Entrega digital organizada en alta resolución",
+                    "1 ampliación de bienvenida 16x20\""
+                ],
                 img: "Imagenes/Sesion.jpg"
             },
             {
@@ -718,7 +760,7 @@
                 name: "Cobertura Aérea con Dron 4K",
                 category: "video",
                 price: 2500,
-                desc: "Tomas de altura espectaculares de la llegada al salón, sesión en exteriores de la quinceañera.",
+                desc: "Tomas de altura espectaculares de la llegada al salón y sesión en exteriores de la quinceañera.",
                 img: "Imagenes/Tomas_Dron.webp"
             },
             {
@@ -748,29 +790,41 @@
             setTimeout(() => toast.classList.remove('toast--visible'), 2500);
         };
 
+        // --- RENDERIZADO DINÁMICO (DISTINGUE SI ES PAQUETE O SERVICIO INDIVIDUAL) ---
         function renderServices(items) {
             const container = document.getElementById('catalogo');
             if (!container) return;
 
-            container.innerHTML = items.map(item => `
-                <article class="product-card">
-                    <div class="product-img-wrapper">
-                        <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1549417229-aa67d3263c09?auto=format&fit=crop&w=600&q=80';">
-                    </div>
-                    <div class="product-info">
-                        <div>
-                            <h3 class="product-title">${item.name}</h3>
-                            <p class="product-desc">${item.desc}</p>
+            container.innerHTML = items.map(item => {
+                // Si es un paquete completo, renderizamos una lista con viñetas
+                const contentHtml = item.isPackage ? `
+                    <ul class="package-features-list">
+                        ${item.items.map(bullet => `<li><i class="fas fa-check"></i> <span>${bullet}</span></li>`).join('')}
+                    </ul>
+                ` : `
+                    <p class="product-desc">${item.desc}</p>
+                `;
+
+                return `
+                    <article class="product-card">
+                        <div class="product-img-wrapper">
+                            <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1549417229-aa67d3263c09?auto=format&fit=crop&w=600&q=80';">
                         </div>
-                        <div class="product-bottom">
-                            <span class="product-price">$${item.price.toLocaleString('es-MX')}</span>
-                            <button class="btn-add" onclick="addToCart(${item.id})">
-                                <i class="fas fa-plus"></i> Agregar
-                            </button>
+                        <div class="product-info">
+                            <div>
+                                <h3 class="product-title">${item.name}</h3>
+                                ${contentHtml}
+                            </div>
+                            <div class="product-bottom">
+                                <span class="product-price">$${item.price.toLocaleString('es-MX')}</span>
+                                <button class="btn-add" onclick="addToCart(${item.id})">
+                                    <i class="fas fa-plus"></i> Agregar
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </article>
-            `).join('');
+                    </article>
+                `;
+            }).join('');
         }
 
         function filterCatalog(cat) {

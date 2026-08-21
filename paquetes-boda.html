@@ -268,7 +268,7 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
             gap: 25px;
             margin-bottom: 60px;
         }
@@ -309,7 +309,7 @@
         }
 
         .product-info {
-            padding: 20px;
+            padding: 22px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -317,17 +317,46 @@
         }
 
         .product-title {
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: var(--blanco);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
         .product-desc {
+            font-size: 0.85rem;
+            color: var(--texto-gris);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        /* --- LISTA EXCLUSIVA PARA PAQUETES DE BODAS --- */
+        .package-features-list {
+            list-style: none;
+            margin-bottom: 18px;
+            padding: 0;
+        }
+
+        .package-features-list li {
             font-size: 0.82rem;
             color: var(--texto-gris);
+            padding: 5px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
             line-height: 1.4;
-            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .package-features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .package-features-list li i {
+            color: var(--dorado-claro);
+            font-size: 0.75rem;
+            margin-top: 3px;
+            flex-shrink: 0;
         }
 
         .product-bottom {
@@ -341,7 +370,7 @@
 
         .product-price {
             font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--dorado-claro);
         }
@@ -366,7 +395,7 @@
         }
 
         /* ==========================================
-           CARRITO LATERAL & OVERLAY
+           CARRITO SIDEBAR & OVERLAY
         ========================================== */
         .cart-overlay {
             position: fixed;
@@ -559,7 +588,7 @@
         }
 
         /* ==========================================
-           RESPONSIVE MOBILE (< 768px)
+           RESPONSIVE MOBILE
         ========================================== */
         @media (max-width: 768px) {
             .header {
@@ -608,8 +637,8 @@
                 <nav class="header__navegacion" id="navLinks">
                     <a href="index.html">Home</a>
                     <a href="paquetes-boda.html" class="active-link">Paquetes Bodas</a>
-                    <a href="paquetes-xv.html">Paquetes XV Años</a>
-                    <a href="#contacto">Contacto</a>
+                    <a href="paquetes-xv.html">PaquetesXV Años</a>
+                    <a href="index.html#contacto "class="btn-nav">Sobre nosotros</a>
                 </nav>
 
                 <button class="btn-cart-nav" onclick="openCart()" aria-label="Ver Carrito">
@@ -677,17 +706,24 @@
     </footer>
 
     <script>
-        // --- NÚMERO DE CONTACTO ---
-        const PHONE_NUMBER = "5214611891526"; // Tu WhatsApp con lada
+        const PHONE_NUMBER = "5211891526"; // Tu WhatsApp con lada
 
-        // --- SERVICIOS ---
+        // --- SERVICIOS Y PAQUETES DE BODA ---
         const servicesData = [
             {
                 id: 1,
                 name: "Paquete Boda Platino",
                 category: "paquete",
                 price: 18500,
-                desc: "Cobertura total foto + video cinema, tomas con dron, sesión previa y Photobook de lujo.",
+                isPackage: true,
+                items: [
+                    "Cobertura completa ceremonia y recepción",
+                    "Video cinema HD + Resumen en alta resolución",
+                    "Tomas panorámicas y de recinto con Dron 4K",
+                    "Sesión Save The Date / Pre-Boda en locación",
+                    "Photobook de lujo pasta dura 30x30cm",
+                    "Ampliación enmarcada para bienvenida 20x24\""
+                ],
                 img: "Imagenes/portada-sesion.jpg"
             },
             {
@@ -695,7 +731,14 @@
                 name: "Paquete Boda Oro",
                 category: "paquete",
                 price: 12500,
-                desc: "Cobertura completa ceremonia y recepción, fotografía ilimitada y video resumen HD.",
+                isPackage: true,
+                items: [
+                    "Cobertura fotográfica ilimitada del evento",
+                    "Video conmemorativo con los mejores momentos",
+                    "Entrega digital organizada en alta definición",
+                    "100 fotografías impresas 6x8\"",
+                    "1 cuadro texturizado 16x20\""
+                ],
                 img: "Imagenes/Sesion.jpg"
             },
             {
@@ -742,7 +785,6 @@
 
         let cart = new Map();
 
-        // --- TOAST NOTIFIER ---
         const notify = (message) => {
             const toast = document.getElementById('toast');
             toast.textContent = message;
@@ -750,33 +792,42 @@
             setTimeout(() => toast.classList.remove('toast--visible'), 2500);
         };
 
-        // --- RENDERIZAR SERVICIOS ---
+        // --- RENDERIZADO DINÁMICO ---
         function renderServices(items) {
             const container = document.getElementById('catalogo');
             if (!container) return;
 
-            container.innerHTML = items.map(item => `
-                <article class="product-card">
-                    <div class="product-img-wrapper">
-                        <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80';">
-                    </div>
-                    <div class="product-info">
-                        <div>
-                            <h3 class="product-title">${item.name}</h3>
-                            <p class="product-desc">${item.desc}</p>
+            container.innerHTML = items.map(item => {
+                const contentHtml = item.isPackage ? `
+                    <ul class="package-features-list">
+                        ${item.items.map(bullet => `<li><i class="fas fa-check"></i> <span>${bullet}</span></li>`).join('')}
+                    </ul>
+                ` : `
+                    <p class="product-desc">${item.desc}</p>
+                `;
+
+                return `
+                    <article class="product-card">
+                        <div class="product-img-wrapper">
+                            <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80';">
                         </div>
-                        <div class="product-bottom">
-                            <span class="product-price">$${item.price.toLocaleString('es-MX')}</span>
-                            <button class="btn-add" onclick="addToCart(${item.id})">
-                                <i class="fas fa-plus"></i> Agregar
-                            </button>
+                        <div class="product-info">
+                            <div>
+                                <h3 class="product-title">${item.name}</h3>
+                                ${contentHtml}
+                            </div>
+                            <div class="product-bottom">
+                                <span class="product-price">$${item.price.toLocaleString('es-MX')}</span>
+                                <button class="btn-add" onclick="addToCart(${item.id})">
+                                    <i class="fas fa-plus"></i> Agregar
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </article>
-            `).join('');
+                    </article>
+                `;
+            }).join('');
         }
 
-        // --- FILTROS ---
         function filterCatalog(cat) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
@@ -789,7 +840,6 @@
             }
         }
 
-        // --- APERTURA Y CIERRE DEL CARRITO ---
         const cartModal = document.getElementById('cartModal');
         const cartOverlay = document.getElementById('cartOverlay');
 
@@ -811,7 +861,6 @@
             }
         });
 
-        // --- LÓGICA DEL CARRITO ---
         function addToCart(id) {
             const item = servicesData.find(s => s.id === id);
             if (!item) return;
@@ -836,8 +885,7 @@
             const badge = document.getElementById('badgeCart');
             const totalEl = document.getElementById('cartTotalPrice');
 
-            let total = 0;
-            let count = 0;
+            let total = 0, count = 0;
 
             if (cart.size === 0) {
                 container.innerHTML = '<p style="color: var(--texto-gris); text-align: center; margin-top: 50px; font-size: 0.85rem;">El carrito está vacío</p>';
@@ -874,7 +922,6 @@
             totalEl.textContent = `$${total.toLocaleString('es-MX')} MXN`;
         }
 
-        // --- CHECKOUT WHATSAPP ---
         function checkoutWhatsApp() {
             if (cart.size === 0) {
                 notify("El carrito está vacío");
@@ -883,7 +930,7 @@
 
             let total = 0;
             let message = "📸 *COTIZACIÓN DE BODA - ESTUDIO 360* 📸\n\n";
-            message += "Hola, me gustaría consultar disponibilidad para estos servicios:\n\n";
+            message += "Hola, me gustaría validar disponibilidad para los siguientes servicios de Boda:\n\n";
 
             cart.forEach(item => {
                 const subtotal = item.price * item.qty;
@@ -891,11 +938,10 @@
                 message += `• ${item.name} (${item.qty}x) — *$${subtotal.toLocaleString('es-MX')} MXN*\n`;
             });
 
-            message += `\n💰 *Total Estimado:* $${total.toLocaleString('es-MX')} MXN\n\n`;
-            message += "¿Qué fechas tienen disponibles?";
+            message += `\n💰 *Total Estimado de Inversión:* $${total.toLocaleString('es-MX')} MXN\n\n`;
+            message += "¿Qué disponibilidad tienen en agenda?";
 
-            const url = `https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
+            window.open(`https://api.whatsapp.com/send?phone=${PHONE_NUMBER}&text=${encodeURIComponent(message)}`, '_blank');
         }
 
         // --- MENÚ MÓVIL ---
@@ -912,17 +958,6 @@
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
             }
-        });
-
-        document.querySelectorAll('.header__navegacion a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                const icon = menuBtn.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                }
-            });
         });
 
         // --- INICIALIZACIÓN ---
